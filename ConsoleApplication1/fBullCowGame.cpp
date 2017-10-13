@@ -1,3 +1,11 @@
+/* Definitions for the FBullCowGame class containing all functionality of one game
+	for more detail check fBullCowGame.h
+
+*/
+
+
+#pragma once
+
 #include "fBullCowGame.h"
 #include "fHiddenWords.h"
 #include <map>
@@ -25,7 +33,7 @@ int32 FBullCowGame::GetMaxTries() const {
 };
 
 
-void FBullCowGame::Reset() {
+void FBullCowGame::Reset() {	
 
 	
 	constexpr int32 MAX_TRIES = 10;
@@ -47,11 +55,11 @@ void FBullCowGame::ChangeMyHiddenWord(FString WordFromList) {
 
 EGuessStatus FBullCowGame::CheckGuessValidity(FString TheGuess) const {
 
-	if (!FBullCowGame::IsIsogram(TheGuess)) { 	//if the guess isnt an isogram 
+	if (!FBullCowGame::IsIsogram(TheGuess)) { 	// if the guess isnt an isogram 
 
 		return EGuessStatus::Not_Isogram;
 	}
-	else if (!FBullCowGame::IsLowercase(TheGuess)) {	//TODO if the guess isnt all lowecase
+	else if (!FBullCowGame::IsLowercase(TheGuess)) {	// is the guess all lowercase?
 
 		return EGuessStatus::Not_Lowercase;
 	}
@@ -59,7 +67,7 @@ EGuessStatus FBullCowGame::CheckGuessValidity(FString TheGuess) const {
 
 		return EGuessStatus::Wrong_Length;
 	}
-	else {	// otherwise return OK
+	else {							// otherwise return OK
 		return EGuessStatus::OK;
 	}
 	

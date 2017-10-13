@@ -1,11 +1,17 @@
+/*	header for the class that stores all the assets in one particular game
+	contains a counter for letter hits, the word being guessed and checking for player guess validity
+*/
+
 #pragma once
 #include <string>
 #include "fHiddenWords.h"
 
+	// make syntax Unreal friendly
+
 using FString = std::string;
 using int32 = int;
 
-//all values intialized to 0
+// all values intialized to 0
 
 struct FBullCowCount {
 	
@@ -27,19 +33,18 @@ enum class EGuessStatus {
 
 class FBullCowGame {
 public:
-	FBullCowGame(); //cunstructor
+	FBullCowGame(); //constructor
 
-	void Reset(); //TODO make a more rich return value
+	void Reset(); 
 	void ChangeMyHiddenWord(FString WordFromList);
 	int32 GetMaxTries() const;
 	int32 GetCurrentTry() const;
 	int32 GetHiddenWordLength() const;
-	EGuessStatus  CheckGuessValidity(FString) const; //TODO make a richer return value
-	bool IsGameWon() const; //TODO determine a win condition and implement into main
+	EGuessStatus  CheckGuessValidity(FString) const; 
+	bool IsGameWon() const; 
 	FBullCowCount SubmitValidGuess(FString TheGuess);
 
 
-//I'm not even here 0~o
 private:
 	// see constructor for intialization
 	int32 MyCurrentTry;

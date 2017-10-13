@@ -4,12 +4,16 @@ and is responsible for all user interaction.
 For game logic see the FBullCowGame class.
 */
 
+#pragma once
+
 #include <iostream>
 #include <string>
 #include "Header.h"
 #include "fBullCowGame.h"
 #include "fHiddenWords.h"
 
+
+// to make syntax Unreal friendly
 using FText = std::string;
 using int32 = int;
 
@@ -30,22 +34,27 @@ void printIntro() {
 
 void WordLengthSelection() {
 
-	// get input from the user ,
-	FText Response = "";
+	
+	FText Response = "";				// get input from the user ,
 	std::cout << "How many characters from 3 to 8, do you want your hidden word to have ?: ";
 	std::getline(std::cin, Response);
 	std::cout << "\n";
-	int32 Respo = std::stoi(Response);
-	
-	Response = HiddenWords.getWordFromDictionary(Respo);
+	if (Response.length() > 1) {	// check if the input is 1 char long
 
-	/* std::string s(Response);		one way of doing this
-	std::string* p = &s;
-	*/
+		std::cout << "You need to give me a single digit number here... -_-" << std::endl;
+		return WordLengthSelection();
+	}
+	else if(!isdigit(Response[0])) {	// check if the input is an int
 
+		std::cout << "You need to give me a single digit number here... -_-" << std::endl;
+		return WordLengthSelection();
+	}
+	else {
 
-
-	return;
+		int32 Respo = std::stoi(Response);
+		Response = HiddenWords.getWordFromDictionary(Respo);
+		return;
+	}
 }
 
 
@@ -53,14 +62,14 @@ FText getValidGuess(FText guessParam) {		//loop until user gives a valid guess
 
 	FText Guess = "";
 	EGuessStatus Status = EGuessStatus::Invalid_Status;
-	do  {
-		// get the guess from the player
+	do  {									// get the guess from the player
+
 		std::cout << "You are on try: " << BCGame.GetCurrentTry() << " of " << BCGame.GetMaxTries();
 		std::cout << " What is your guess? :";
 		std::getline(std::cin, Guess);
 
 
-		//check status and return Status
+											//check status and return Status
 		Status = BCGame.CheckGuessValidity(Guess);
 		switch (Status)
 		{
@@ -96,25 +105,23 @@ void PrintGameSummary() {
 	}
 };
 
-void playTheGame() {
+void playTheGame() {					// plays a single game until completion
 
-	FString  var = HiddenWords.getterSelectedWord();   // actual variable declaration.
+	FString  var = HiddenWords.getterSelectedWord();	// actual variable declaration.
 
-	FString  *ip;   // declare a variable that is >> typeof << Pointer 
-	ip = &var;       // store >> address << of var in the Pointer variable
+	FString  *ip;			// declare a variable that is >> typeof << Pointer 
+	ip = &var;			  // store >> address << of var in the Pointer variable
 	
 	BCGame.Reset();
 	BCGame.ChangeMyHiddenWord(*ip);  // pass the pointer to the BCGame as the hidden word
 	int32 MaxTries = BCGame.GetMaxTries();
-	// loop for a bunch of turns and ask for guesses
 	
-	// loop asking for guesses while the game is NOT won
-	// and there are still tries remaining
+	
+	
+				// loop for a bunch of turns and ask for guesses while the game is NOT won and there are still tries remaining
 	while ( !BCGame.IsGameWon() && BCGame.GetCurrentTry() <= MaxTries ) {
 		FText Guess = getValidGuess("aa"); 
-
-
-		// Submit valid guess to the game and recieve counts
+								// Submit valid guess to the game and recieve counts
 		FBullCowCount BullCowCount = BCGame.SubmitValidGuess(Guess);
 
 
@@ -138,7 +145,7 @@ bool askToPlayAgain() {
 
 void printGameSummary() {
 
-	PointerToBullCowGame = &BCGame;	// points to address of BCGame
+	PointerToBullCowGame = &BCGame;				// points to address of BCGame
 
 	if (PointerToBullCowGame->IsGameWon()) {
 		std::cout << "Oh wow! You have won the Game! \n";
@@ -148,11 +155,7 @@ void printGameSummary() {
 	}
 };
 
-// ask the user what word length does he want?
-// take a number from the user and alter the word length
-// launch reset
-
-int main() {
+int main() {				// entry point for the application
 
 	do {
 		printIntro();
@@ -162,6 +165,6 @@ int main() {
 	while (
 		askToPlayAgain() == 1
 		);
-	return 0; //exit the app
+	return 0;			//	exit the app
 
 }

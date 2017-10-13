@@ -1,3 +1,8 @@
+/* header for a class resolving the player choosing word length
+	Contains a list of all available words the player can resolve to start guessing
+	Note the getter method returns a pointer
+*/
+
 #pragma once
 
 #include <string>
@@ -10,7 +15,7 @@ class FHiddenWords {
 public:
 	FHiddenWords(); 	// a constructor
 	~FHiddenWords();
-	FString getterSelectedWord();
+	FString getterSelectedWord() const;
 	FString getWordFromDictionary(int32 respo);
 
 private:
@@ -22,6 +27,7 @@ private:
 		FString Six = "carpet";
 		FString Seven = "miracle";
 		FString Eight = "machined";
+		FString Nine = "brimstone";
 
 	};
 	
